@@ -24,8 +24,7 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          'vue-vendor': ['vue', 'vue-router', 'pinia'],
-          'ui-vendor': ['html5-qrcode'],
+          'vue-vendor': ['vue', ],
         },
       },
     },
