@@ -21,7 +21,7 @@ services:
 
   cloudflared:
     image: cloudflare/cloudflared:latest
-    container_name: book-cloudflared
+    container_name: backupmanager-cloudflared
     restart: unless-stopped
     command: tunnel run
     volumes:
