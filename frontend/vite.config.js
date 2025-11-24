@@ -19,6 +19,15 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
-    emptyOutDir: true,
-  }
+    sourcemap: false,
+    // Optimize chunks
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vue-vendor': ['vue', 'vue-router', 'pinia'],
+          'ui-vendor': ['html5-qrcode'],
+        },
+      },
+    },
+  },
 })
