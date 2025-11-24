@@ -5,7 +5,7 @@
       <div class="card w-full max-w-md bg-base-100 shadow-xl">
         <div class="card-body">
           <div class="text-center mb-6">
-            <img src="/public/logo.png" alt="logo" />
+            <img :src="logo" alt="logo" />
             <h1 class="text-3xl font-bold">Database Backup Manager</h1>
             <p class="text-base-content/60 mt-2">Secure automated backups to Google Drive</p>
           </div>
@@ -200,6 +200,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import logo from './assets/logo.png'
 
 const API_BASE = '/api'
 

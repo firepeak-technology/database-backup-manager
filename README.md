@@ -2,7 +2,7 @@
 
 Automated database backup system with Google Drive integration.
 
-![logo.png](frontend/public/logo.png)
+![logo.png](frontend/src/assets/logo.png)
 
 
 ## Quick Start
