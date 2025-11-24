@@ -10,10 +10,12 @@ NC='\033[0m'
 
 echo -e "${BLUE}🚀 Database Backup Manager - Deployment Script${NC}"
 echo "================================================"
+# Get latest commit SHA
+LATEST_SHA=$(curl -s https://api.github.com/repos/firepeak-technology/database-backup-manager/commits/main | grep '"sha"' | head -1 | cut -d'"' -f4)
 
-curl -O https://raw.githubusercontent.com/firepeak-technology/database-backup-manager/main/deploy.sh
-curl -O https://raw.githubusercontent.com/firepeak-technology/database-backup-manager/main/docker-compose.yml
-
+# Download using commit SHA (never cached)
+curl -O "https://raw.githubusercontent.com/firepeak-technology/database-backup-manager/${LATEST_SHA}/deploy.sh"
+curl -O "https://raw.githubusercontent.com/firepeak-technology/database-backup-manager/${LATEST_SHA}/docker-compose.yml"
 
 if ! command -v docker &> /dev/null; then
     echo -e "${RED}❌ Docker not found!${NC}"
