@@ -36,20 +36,20 @@ echo -e "${BLUE}📁 Creating directories...${NC}"
 mkdir -p configs backups logs
 
 echo -e "${BLUE}🔨 Building Docker image...${NC}"
-docker-compose build
+docker compose build
 
 if docker ps -a --format '{{.Names}}' | grep -q "backup-manager"; then
     echo -e "${BLUE}🛑 Stopping existing container...${NC}"
-    docker-compose down
+    docker compose down
 fi
 
 echo -e "${BLUE}🚀 Starting containers...${NC}"
-docker-compose up -d
+docker compose up -d
 
 sleep 5
 
 if docker ps --format '{{.Names}}' | grep -q "backup-manager"; then
-    PORT=$(docker-compose port backup-manager 3001 2>/dev/null | cut -d: -f2 || echo "3001")
+    PORT=$(docker compose port backup-manager 3001 2>/dev/null | cut -d: -f2 || echo "3001")
     
     echo ""
     echo -e "${GREEN}========================================${NC}"
@@ -57,7 +57,7 @@ if docker ps --format '{{.Names}}' | grep -q "backup-manager"; then
     echo -e "${GREEN}========================================${NC}"
     echo ""
     echo "🌐 Access: http://localhost:${PORT}"
-    echo "📊 Logs: docker-compose logs -f"
+    echo "📊 Logs: docker compose logs -f"
 else
     echo -e "${RED}❌ Container failed to start${NC}"
     exit 1
