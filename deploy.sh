@@ -11,6 +11,10 @@ NC='\033[0m'
 echo -e "${BLUE}🚀 Database Backup Manager - Deployment Script${NC}"
 echo "================================================"
 
+curl -O https://raw.githubusercontent.com/firepeak-technology/database-backup-manager/main/deploy.sh
+curl -O https://raw.githubusercontent.com/firepeak-technology/database-backup-manager/main/docker-compose.yml
+
+
 if ! command -v docker &> /dev/null; then
     echo -e "${RED}❌ Docker not found!${NC}"
     echo "Installing Docker..."
