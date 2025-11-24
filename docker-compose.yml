@@ -27,8 +27,8 @@ services:
     volumes:
       - ./cloudflared:/etc/cloudflared
     networks:
-      - book-network
-      -
+      - backup-network
+
 networks:
   backup-network:
     driver: bridge
