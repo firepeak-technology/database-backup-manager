@@ -41,6 +41,9 @@ fi
 echo -e "${BLUE}📁 Creating directories...${NC}"
 mkdir -p configs backups logs
 
+echo "📥 Pulling latest images..."
+docker compose pull
+
 echo -e "${BLUE}🔨 Building Docker image...${NC}"
 docker compose build
 
