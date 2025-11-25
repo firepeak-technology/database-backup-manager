@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  backup-manager:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: backup-manager-dev
+    restart: unless-stopped
+    ports:
+      - "3001:3001"  # Backend
+      - "5173:5173"  # Frontend (Vite dev server)
+    environment:
+      - NODE_ENV=development
+      - TZ=Europe/Brussels
+    env_file:
+      - .env
+    volumes:
+      # Mount source code for hot-reload
+      - ./server.js:/app/server.js
+      - ./package.json:/app/package.json
+      - ./frontend:/app/frontend
+      # Persist data
+      - ./configs:/app/configs
+      - ./backups:/app/backups
+      - ./logs:/app/logs
+      # Exclude node_modules (use container's version)
+      - /app/node_modules
+      - /app/frontend/node_modules
+    networks:
+      - backup-network
+
+
+networks:
+  backup-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
+  mysql-data:

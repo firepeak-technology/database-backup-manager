@@ -23,8 +23,10 @@ const PORT = process.env.PORT || 3001;
 
 // Middleware
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
-  credentials: true
+  origin: process.env.FRONTEND_URL || 'http://localhost:3001',
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json());
 
@@ -37,8 +39,14 @@ app.use(session({
   secret: process.env.SESSION_SECRET || 'your-secret-key-change-this',
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: process.env.NODE_ENV === 'production' }
+  cookie: {
+    secure: false,           // Must be false for HTTP
+    httpOnly: true,
+    sameSite: 'lax',        // Important for OAuth redirects
+    maxAge: 24 * 60 * 60 * 1000  // 24 hours
+  }
 }));
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -48,6 +56,7 @@ passport.use(new GoogleStrategy({
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
   callbackURL: process.env.GOOGLE_CALLBACK_URL || 'http://localhost:3001/api/auth/google/callback'
 }, (accessToken, refreshToken, profile, done) => {
+  console.log('✅ Google Auth Success:', profile.emails[0].value);
   profile.tokens = { accessToken, refreshToken };
   return done(null, profile);
 }));
